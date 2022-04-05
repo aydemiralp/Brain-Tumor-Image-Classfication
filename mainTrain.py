@@ -26,12 +26,12 @@ INPUT_SIZE=64
 # print(path.split('.')[1])
 
 for i , image_name in enumerate(no_tumor_images):
-    if(image_name.split('.')[1]=='jpg'):
+    if(image_name.split('.')[1]=='jpg'):    #ensure we are looking at jpg images from our folder
         image=cv2.imread(image_directory+'no/'+image_name)
-        image=Image.fromarray(image,'RGB')
+        image=Image.fromarray(image,'RGB')  #convert to pillow image
         image=image.resize((INPUT_SIZE,INPUT_SIZE))
-        dataset.append(np.array(image))
-        label.append(0)
+        dataset.append(np.array(image))   #add the images to data 
+        label.append(0)                   #add the respective label
 
 for i , image_name in enumerate(yes_tumor_images):
     if(image_name.split('.')[1]=='jpg'):
@@ -94,15 +94,16 @@ model.add(Activation('softmax'))
 
 model.compile(loss='categorical_crossentropy',optimizer='adam', metrics=['accuracy'])
 
+epochs =10
 
 model.fit(x_train, y_train, 
-batch_size=16, 
-verbose=1, epochs=10, 
+batch_size=32, 
+epochs=epochs,
+verbose=1, 
 validation_data=(x_test, y_test),
-shuffle=False)
+shuffle=True)
 
 
-model.save('BrainTumor10Epochs.h5')
 
 
 

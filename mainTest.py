@@ -3,20 +3,22 @@ from keras.models import load_model
 from PIL import Image
 import numpy as np
 
+from mainTrain import INPUT_SIZE
+
 model=load_model('BrainTumor10EpochsCategorical.h5')
 
-image=cv2.imread('C:\\Deep Learning Project\\Brain Tumor Image Classfication\\pred\\pred0.jpg')
-
+image = cv2.imread('pred\pred14.jpg')
 img=Image.fromarray(image)
 
-img=img.resize((64,64))
+img=img.resize((INPUT_SIZE, INPUT_SIZE))
 
 img=np.array(img)
 
-input_img=np.expand_dims(img, axis=0)
+input_image = np.expand_dims(img, axis=0)
 
-model.predict (input_img)
+prediction = model.predict(input_image)
+result = np.argmax(prediction, axis=1)
 
-print(input_img)
+print(result)
 
 

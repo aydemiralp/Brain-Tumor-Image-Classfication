@@ -1,10 +1,11 @@
 import os
+import cv2
 import tensorflow as tf
 import numpy as np
-from keras.preprocessing import image 
 from PIL import Image
-import cv2
+
 from keras.models import load_model
+
 from flask import Flask, request, render_template
 from werkzeug.utils import secure_filename
 
@@ -12,7 +13,7 @@ from werkzeug.utils import secure_filename
 app = Flask(__name__)
 
 
-model =load_model('BrainTumor10Epochs.h5')
+model =load_model('BrainTumor10EpochsCategorical.h5')
 print('Model loaded. Check http://127.0.0.1:5000/')
 
 
@@ -29,9 +30,9 @@ def getResult(img):
     image = image.resize((64, 64))
     image=np.array(image)
     input_img = np.expand_dims(image, axis=0)
-    input_img=np.expand_dims(img, axis=0)
-
-    model.predict (input_img)
+    prediction = model.predict(input_img)
+    result = np.argmax(prediction, axis=1)
+    return result
 
 
 @app.route('/', methods=['GET'])

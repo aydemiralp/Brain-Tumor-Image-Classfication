@@ -94,7 +94,7 @@ model.add(Activation('softmax'))
 
 model.compile(loss='categorical_crossentropy',optimizer='adam', metrics=['accuracy'])
 
-epochs =10
+epochs =30
 
 model.fit(x_train, y_train, 
 batch_size=32, 
@@ -106,4 +106,5 @@ shuffle=True)
 
 
 
-
+model_acc = model.evaluate(x_test, y_test)[1]
+print('Test accuracy: {:.3%}'.format(model_acc))

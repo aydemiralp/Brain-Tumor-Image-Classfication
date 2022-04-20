@@ -7,7 +7,7 @@ from mainTrain import INPUT_SIZE
 
 model=load_model('BrainTumor10EpochsCategorical.h5')
 
-image = cv2.imread('pred\pred14.jpg')
+image = cv2.imread('pred\pred0.jpg')
 img=Image.fromarray(image)
 
 img=img.resize((INPUT_SIZE, INPUT_SIZE))
